@@ -14,10 +14,10 @@ import { FuseModule } from '@fuse/fuse.module';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from '@fuse/components';
 
-import { fuseConfig } from 'app/fuse-config';
+import { fuseConfig } from '@core/fuse-config';
 
 import { AppComponent } from 'app/app.component';
-import { LayoutModule } from 'app/layout/layout.module';
+import { LayoutModule } from '@core/layout/layout.module';
 import { SampleModule } from 'app/main/sample/sample.module';
 
 const appRoutes: Routes = [
