@@ -21,6 +21,24 @@
         "paths": {
             "@fuse": [
                 "@fuse/"
+            ],
+            "@components-pdv/*": [
+                "app/modules/pdv/components/*"
+            ],
+            "@model/*": [
+                "app/shared/model/*"
+            ],
+            "@services/*": [
+                "app/core/services/*"
+            ],
+            "@core/*": [
+                "app/core/*"
+            ],
+            "@shared/*": [
+                "app/shared/*"
+            ],
+            "@env/*": [
+                "environments/*"
             ]
         }
     },

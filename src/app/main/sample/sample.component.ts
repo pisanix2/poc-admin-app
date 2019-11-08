@@ -1,18 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { fuseAnimations } from '@fuse/animations';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
     selector: 'sample',
     templateUrl: './sample.component.html',
-    styleUrls: ['./sample.component.scss'],
-    animations: fuseAnimations
+    styleUrls: ['./sample.component.scss']
 })
-export class SampleComponent implements OnInit {
-    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-    @ViewChild(MatSort, { static: true }) sort: MatSort;
+export class SampleComponent {
 
     icon = 'shopping_basket'
     columns = [
@@ -26,28 +20,10 @@ export class SampleComponent implements OnInit {
     ]
     pageTitle = 'Cadastro de produto';
     pageContextName = 'Produto';
-    dataSource: MatTableDataSource<any>;
+    dataSource: MatTableDataSource<any> = new MatTableDataSource(ELEMENT_DATA);
 
     constructor() {
-        // #TODO - Retirar, na herança o datasource deve ser instanciado pelo filho
-        this.dataSource = new MatTableDataSource(ELEMENT_DATA);
-    }
-
-    ngOnInit() {
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-    }
-
-    getDisplayedColumns() {
-        return this.columns.map(el => el.field);
-    }
-
-    applyFilter(filter: string) {
-        this.dataSource.filter = filter.trim().toLowerCase();
-
-        if (this.dataSource.paginator) {
-            this.dataSource.paginator.firstPage();
-        }
+    
     }
 }
 
@@ -62,4 +38,5 @@ const ELEMENT_DATA: any[] = [
     { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
     { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
     { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
+    { position: 11, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
+  ];
