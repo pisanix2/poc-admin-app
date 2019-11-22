@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { BaseDatasource } from '@core/crud-builder/list/list.component';
+import { BaseDatasource } from "@core/crud-builder/datasource/base.datasource";
 import { CollectionViewer } from "@angular/cdk/collections";
 import { Observable, BehaviorSubject, of } from "rxjs";
 import { catchError, finalize } from "rxjs/operators";

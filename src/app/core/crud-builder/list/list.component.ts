@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, Input, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, ViewChild, Input, AfterViewInit, ElementRef } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { DataSource } from "@angular/cdk/collections";
 
-import { debounceTime, distinctUntilChanged, startWith, tap, delay } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { merge, fromEvent } from "rxjs";
+import { BaseDatasource } from "@core/crud-builder/datasource/base.datasource";
 
 class BaseTableColumns {
   caption: string;
@@ -74,9 +74,4 @@ export class ListComponent implements AfterViewInit {
     const sortDirection = this.sort.direction
     this.dataSource.loadData(filter, pageIndex, pageSize, sortField, sortDirection);
   }
-}
-
-export abstract class BaseDatasource<T> extends DataSource<T> {
-  abstract recordCount: number;
-  abstract loadData(filter: string, pageIndex: number, pageSize: number, sortField: string, sortDirection: string);
 }
