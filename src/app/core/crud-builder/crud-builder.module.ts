@@ -17,10 +17,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { FormComponent } from './form/form.component';
+
+import { MaterialDesignFrameworkModule } from 'angular7-json-schema-form';
 
 
 @NgModule({
-  declarations: [ListComponent],
+  declarations: [ListComponent, FormComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -37,10 +40,12 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatSortModule,
     MatSnackBarModule,
     MatTableModule,
-    MatTabsModule
+    MatTabsModule,
+    MaterialDesignFrameworkModule
   ],
   exports: [
-    ListComponent
+    ListComponent,
+    FormComponent
   ]
 })
 export class CrudBuilderModule { }
