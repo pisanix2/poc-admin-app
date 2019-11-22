@@ -43,7 +43,7 @@
         <!-- CONTENT CARD -->
         <div class="content-card">
             <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8"
-                matSortActive="barCode" matSortDirection="asc" matSortDisableClear>
+                matSortActive="{{sortField}}" matSortDirection="{{sortDirection}}" matSortDisableClear>
 
                 <!--- Note that these columns can be defined in any order.
                       The actual rendered columns are set as a property on the row definition" -->
@@ -57,7 +57,7 @@
                 <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"></tr>
             </table>
             <mat-paginator [length]="dataSource.recordCount" [pageSize]="10"
-                [pageSizeOptions]="[3, 10, 25, 100]"></mat-paginator>
+                [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
         </div>
         <!-- / CONTENT CARD -->
     </div>

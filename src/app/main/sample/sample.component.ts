@@ -20,6 +20,8 @@ export class SampleComponent {
     ]
     pageTitle = 'Cadastro de produto';
     pageContextName = 'Produto';
+    sortField = "barCode";
+    sortDirection = "asc";
     dataSource = new ProductDataSource(this.sampleService);
 
     constructor(private sampleService: SampleService) {

@@ -33,6 +33,8 @@ export class ListComponent implements AfterViewInit {
   @Input() pageTitle: string;
   @Input() pageContextName: string;
   @Input() dataSource: BaseDatasource<any>;
+  @Input() sortField: string;
+  @Input() sortDirection: string;
 
   constructor() {
   }
