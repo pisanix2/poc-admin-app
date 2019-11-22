@@ -1,8 +1,11 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, AfterViewInit, ElementRef } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { DataSource } from "@angular/cdk/collections";
+
+import { debounceTime, distinctUntilChanged, startWith, tap, delay } from 'rxjs/operators';
+import { merge, fromEvent } from "rxjs";
 
 class BaseTableColumns {
   caption: string;
@@ -19,34 +22,59 @@ class BaseTableAction {
   styleUrls: ['./list.component.scss'],
   animations: fuseAnimations
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild('filter', { static: false }) filter: ElementRef;
 
   @Input() icon: string;
   @Input() columns: BaseTableColumns[];
   @Input() actions: BaseTableAction[];
   @Input() pageTitle: string;
   @Input() pageContextName: string;
-  @Input() dataSource: MatTableDataSource<any>;
+  @Input() dataSource: BaseDatasource<any>;
 
   constructor() {
   }
 
-  ngOnInit() {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+  ngAfterViewInit() {
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    fromEvent(this.filter.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(150),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+
+          this.loadData();
+        })
+      )
+      .subscribe();
+
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        tap(() => this.loadData())
+      )
+      .subscribe();
+
+    this.loadData();
   }
 
   getDisplayedColumns() {
-      return this.columns.map(el => el.field);
+    return this.columns.map(el => el.field);
   }
 
-  applyFilter(filter: string) {
-      this.dataSource.filter = filter.trim().toLowerCase();
-
-      if (this.dataSource.paginator) {
-          this.dataSource.paginator.firstPage();
-      }
+  loadData() {
+    const filter = this.filter.nativeElement.value
+    const pageIndex = this.paginator.pageIndex
+    const pageSize = this.paginator.pageSize
+    const sortField = this.sort.active
+    const sortDirection = this.sort.direction
+    this.dataSource.loadData(filter, pageIndex, pageSize, sortField, sortDirection);
   }
+}
+
+export abstract class BaseDatasource<T> extends DataSource<T> {
+  abstract recordCount: number;
+  abstract loadData(filter: string, pageIndex: number, pageSize: number, sortField: string, sortDirection: string);
 }

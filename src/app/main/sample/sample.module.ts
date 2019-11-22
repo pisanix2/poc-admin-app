@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CoreModule } from '@core/core.module';
 
 import { SampleComponent } from './sample.component';
+import { SampleService } from './sample.service';
 
 const routes = [
     {
@@ -14,6 +15,9 @@ const routes = [
 @NgModule({
     declarations: [
         SampleComponent
+    ],
+    providers: [
+        SampleService
     ],
     imports     : [
         RouterModule.forChild(routes),
