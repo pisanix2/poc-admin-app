@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { SampleService } from './sample.service';
 
 @Component({
     selector: 'sample',
@@ -20,13 +20,13 @@ export class SampleComponent {
     ]
     pageTitle = 'Cadastro de produto';
     pageContextName = 'Produto';
-    dataSource: MatTableDataSource<any> = new MatTableDataSource(ELEMENT_DATA);
+    
 
-    constructor() {
+    constructor(private sampleService: SampleService) {
     
     }
 }
-
+/*
 const ELEMENT_DATA: any[] = [
     { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
     { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
@@ -40,3 +40,4 @@ const ELEMENT_DATA: any[] = [
     { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
     { position: 11, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
   ];
+*/
