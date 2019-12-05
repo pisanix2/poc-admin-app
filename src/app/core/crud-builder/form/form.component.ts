@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Location } from '@angular/common';
 import { fuseAnimations } from '@fuse/animations';
 
 @Component({
@@ -9,87 +10,58 @@ import { fuseAnimations } from '@fuse/animations';
 })
 export class FormComponent implements OnInit {
 
-  constructor() { }
+  @Input() schema: any;
+  @Input() layout: any;
+  @Input() data: any;
+  @Input() title: string;
+  @Input() subtitle: string;
+
+  @Output() onSubmit = new EventEmitter<any>();
+
+  constructor(private location: Location) {
+  }
 
   ngOnInit() {
+    this.jsonFormObject = {
+      schema: this.schema,
+      layout: this.layout,
+      data: this.data
+    }   
   }
 
-  schema = {
-    "$id": "https://example.com/product.schema.json",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Product",
-    "type": "object",
-    "primaryKey": "id",
-    "properties": {
-      "id": {
-        "type": "string"
-      },
-      "contractId": {
-        "type": "string"
-      },
-      "userCode": {
-        "type": "string"
-      },
-      "barCode": {
-        "type": "string"
-      },
-      "title": {
-        "type": "string"
-      },
-      "description": {
-        "type": "string"
-      },
-      "price": {
-        "type": "number"
-      },
-      "sendToPos": {
-        "type": "boolean"
-      },
-      "CFOP": {
-        "type": "string"
-      },
-      "NCM": {
-        "type": "string"
-      },
-      "CST": {
-        "type": "string"
-      }
-    },
-    "required": [
-      "contractId",
-      "userCode",
-      "title",
-      "price"
-    ]
+  jsonFormObject: any;
+  valid: boolean;
+  jsonFormOptions: any = {
+    addSubmit: true,
+    debug: false,
+    loadExternalAssets: true,
+    returnEmptyFields: false,
+    setSchemaDefaults: true,
+    defautWidgetOptions: { feedback: true }
+  };
+  selectedFramework = 'material-design';
+  selectedLanguage = 'en';
+
+  onBack() {
+    this.location.back();
   }
 
-  layout = [
-    { "key": "userCode", "title": "Código de barras", "validationMessages": { "userCode": "Esse campo é obrigatório" }},
-    { "key": "barCode" },
-    { "key": "title" },
-    { "key": "description" },
-    { "key": "price" },
-    { "key": "sendToPos" },
-    { "key": "CFOP" },
-    { "key": "NCM" },
-    { "key": "CST" }
-  ]
+  submit(data) {
+    if (this.valid) {
+      this.onSubmit.emit(data);
+    }
+  }
 
-  data = {
-    "id": "aafb0b10ea1ba69982bade008a000497",
-    "contractId": "fd100c0d7a414c42a63fbc2f6c2ec090",
-    "userCode": "01",
-    "barCode": "01",
-    "title": "Peca 2990",
-    "description": "Peca 2990",
-    "price": "29.90",
-    "sendToPos": false,
-    "CFOP": "5102",
-    "NCM": "6309.00.10",
-    "CST": "102",
-    "createdAt": "2019-10-30T20:54:45.831Z",
-    "updatedAt": "2019-10-30T20:58:51.101Z",
-    "deletedAt": null
+  isValid(isValid) {
+    this.valid = isValid;
+  }
+  
+  onChanges(data) {
+    console.log('onChanges', data);
+  }
+
+  validationErrors(errorObject) {
+    console.log('validationErrors', errorObject);
   }
 
 }

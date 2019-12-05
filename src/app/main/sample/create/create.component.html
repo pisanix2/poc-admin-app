@@ -1,1 +1,7 @@
-<app-form class="page-layout carded fullwidth inner-scroll"></app-form>
+<app-form class="page-layout carded fullwidth inner-scroll"
+  [schema]="schema"
+  [layout]="layout"
+  [data]="data"
+  [title]="title"
+  [subtitle]="subtitle"
+  (onSubmit)="onSubmit($event)"></app-form>

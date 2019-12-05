@@ -1,4 +1,12 @@
+@import "src/@fuse/scss/fuse";
+
 #form {
+    .top-bg {
+        height: 192px;
+          @include media-breakpoint('lt-md') {
+              height: 248px;
+          }
+      }
 
     .header {
 

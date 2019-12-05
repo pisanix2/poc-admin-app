@@ -28,6 +28,12 @@ export class SampleService {
     )
   }
 
+  public getProductById(id): Observable<any> {
+    return this.http.get(`http://localhost:8080/product/${id}`).pipe(
+      map(res => res)
+    )
+  }
+
 }
 
 export class Product {
